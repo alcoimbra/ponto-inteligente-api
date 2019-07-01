@@ -9,20 +9,23 @@ import org.springframework.stereotype.Service;
 
 import br.com.stefanini.pontointeligente.entity.Empresa;
 import br.com.stefanini.pontointeligente.repository.EmpresaRepository;
+import br.com.stefanini.pontointeligente.service.EmpresaService;
 
 @Service
-public class EmpresaServiceImpl {
+public class EmpresaServiceImpl implements EmpresaService{
 	private static final Logger log = LoggerFactory.getLogger(EmpresaServiceImpl.class);
 	
 	@Autowired
 	private EmpresaRepository empresaRepository;
 	
+	@Override
 	public Optional<Empresa> buscarPorCnpj(String cnpj) {
 		log.info("Buscando uma Empresa para o CNPJ {}", cnpj);
 		
 		return Optional.ofNullable(this.empresaRepository.findByCnpj(cnpj));
 	}
 	
+	@Override
 	public Empresa persist(Empresa empresa) {
 		log.info("Persistindo Empresa: {}", empresa);
 		
