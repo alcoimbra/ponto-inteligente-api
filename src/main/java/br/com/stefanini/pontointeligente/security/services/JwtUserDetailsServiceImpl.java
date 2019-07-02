@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.stefanini.pontointeligente.entity.Funcionario;
+import br.com.stefanini.pontointeligente.security.JwtUserFactory;
 import br.com.stefanini.pontointeligente.service.FuncionarioService;
 
 @Service
@@ -22,9 +23,9 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 		Optional<Funcionario> funcionario = this.funcionarioService.buscarPorEmail(username);
 		
 		if(funcionario.isPresent()) {
-			
+			return JwtUserFactory.create(funcionario.get());
 		}
 		
-		return null;
+		throw new UsernameNotFoundException("E-mail não Encontrado");
 	}
 }
